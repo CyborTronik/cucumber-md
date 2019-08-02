@@ -1,5 +1,10 @@
-Feature: Another feature
-  Some lorem....
+Feature: Example Feature
+  Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...
+
+  Scenario: Simple scenario primer
+    Given some state prepared
+    When I do a specific action
+    Then everything is allright
 
   Scenario Outline: Some outline scenario <param>
     Given lorem ipsum

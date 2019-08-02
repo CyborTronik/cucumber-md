@@ -8,8 +8,8 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
         plugin = {
                 "pretty",
-                "com.github.open_fun.MarkdownPlugin:target/specs"
+                "com.github.open_fun.MarkdownPlugin:docs"
         }
 )
-public class RunCukes {
+public class RunCukesTest {
 }
