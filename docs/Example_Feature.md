@@ -1,7 +1,7 @@
 # Example Feature
 
   Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...
-## Simple scenario primer 2
+## Simple scenario primer
 
        Given some state prepared
        When I do a specific action
