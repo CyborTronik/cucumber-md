@@ -1,6 +1,5 @@
 package com.github.open_fun.specs.beans;
 
-
 import cucumber.api.Result;
 import lombok.Builder;
 import lombok.Data;
@@ -19,8 +18,7 @@ public class StepDescription {
     public boolean isFailed() {
         if (status == null)
             return false;
-        return status.is(Result.Type.FAILED)
-                || status.is(Result.Type.AMBIGUOUS);
+        return status.is(Result.Type.FAILED) || status.is(Result.Type.AMBIGUOUS);
     }
 
     public String getErrorMessage() {

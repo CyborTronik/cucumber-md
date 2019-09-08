@@ -33,18 +33,13 @@ public abstract class SpecsPlugin implements ConcurrentEventListener {
         String scenarioName = testStepFinished.getTestCase().getName();
         if (testStep instanceof PickleStepTestStep) {
             PickleStepTestStep pickleStepTestStep = (PickleStepTestStep) testStep;
-            StepDescription stepDescription = StepDescription.builder()
-                    .status(testStepFinished.result)
-                    .title(pickleStepTestStep.getStepText())
-                    .pattern(pickleStepTestStep.getPattern())
-                    .params(pickleStepTestStep.getStepArgument())
-                    .build();
+            StepDescription stepDescription = StepDescription.builder().status(testStepFinished.result)
+                    .title(pickleStepTestStep.getStepText()).pattern(pickleStepTestStep.getPattern())
+                    .params(pickleStepTestStep.getStepArgument()).build();
             specs.mergeStepToScenario(scenarioName, stepDescription);
         } else {
             String stepTitle = testStep.toString();
-            StepDescription stepDescription = StepDescription.builder()
-                    .status(testStepFinished.result)
-                    .title(stepTitle)
+            StepDescription stepDescription = StepDescription.builder().status(testStepFinished.result).title(stepTitle)
                     .build();
             specs.mergeStepToScenario(scenarioName, stepDescription);
         }
@@ -54,8 +49,7 @@ public abstract class SpecsPlugin implements ConcurrentEventListener {
     private void handleScenario(TestCaseFinished testCaseFinished) {
         TestCase testCase = testCaseFinished.getTestCase();
         List<String> tags = testCase.getTags().stream().map(PickleTag::getName).collect(Collectors.toList());
-        ScenarioDescription scenarioDescription = new ScenarioDescription()
-                .withTitle(testCase.getName())
+        ScenarioDescription scenarioDescription = new ScenarioDescription().withTitle(testCase.getName())
                 .withTags(tags);
         specs.mergeScenarioDescription(scenarioDescription);
     }
@@ -65,27 +59,19 @@ public abstract class SpecsPlugin implements ConcurrentEventListener {
         Feature feature = gherkinDocument.getFeature();
         List<String> tags = feature.getTags().stream().map(Tag::getName).collect(Collectors.toList());
 
-        List<ScenarioDescription> scenarios = feature.getChildren()
-                .stream()
-                .map(this::toScenarioDescription)
+        List<ScenarioDescription> scenarios = feature.getChildren().stream().map(this::toScenarioDescription)
                 .collect(Collectors.toList());
 
-        FeatureDescription featureDescription = FeatureDescription.builder()
-                .title(feature.getName())
-                .description(feature.getDescription())
-                .tags(tags)
-                .scenarios(scenarios)
-                .build();
+        FeatureDescription featureDescription = FeatureDescription.builder().title(feature.getName())
+                .description(feature.getDescription()).tags(tags).scenarios(scenarios).build();
         specs.addFeature(featureDescription);
     }
 
     private ScenarioDescription toScenarioDescription(ScenarioDefinition scenarioDefinition) {
-        String title = scenarioDefinition instanceof Background ?
-                Background.class.getSimpleName() + ": " + scenarioDefinition.getName()
-                : scenarioDefinition.getName();
+        String title = scenarioDefinition instanceof Background
+                ? Background.class.getSimpleName() + ": " + scenarioDefinition.getName() : scenarioDefinition.getName();
         ScenarioDescription scenarioDescription = new ScenarioDescription()
-                .withDescription(scenarioDefinition.getDescription())
-                .withTitle(title)
+                .withDescription(scenarioDefinition.getDescription()).withTitle(title)
                 .withSteps(scenarioDefinition.getSteps().stream().map(this::toStepDescription));
         if (scenarioDefinition instanceof ScenarioOutline) {
             List<Examples> examples = ((ScenarioOutline) scenarioDefinition).getExamples();
