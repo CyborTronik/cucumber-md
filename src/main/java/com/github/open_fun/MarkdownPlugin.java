@@ -53,28 +53,22 @@ public class MarkdownPlugin extends SpecsPlugin {
 
     private MarkdownBuilder toMarkdown(FeatureDescription feature) {
         Stream<MarkdownBuilder> stories = feature.getScenarios().stream().map(this::toMarkdown);
-        return new MarkdownBuilder()
-                .withHeader(escapeHtml4(feature.getTitle()))
-                .withParagraph(escapeHtml4(feature.getDescription()))
-                .withStories(stories);
+        return new MarkdownBuilder().withHeader(escapeHtml4(feature.getTitle()))
+                .withParagraph(escapeHtml4(feature.getDescription())).withStories(stories);
     }
 
     private MarkdownBuilder toMarkdown(ScenarioDescription scenarioDescription) {
         Stream<MarkdownBuilder> steps = scenarioDescription.getSteps().stream().map(this::toMarkdown);
         MarkdownBuilder markdownBuilder = new MarkdownBuilder();
         if (scenarioDescription.isFailed()) {
-            String title = new MarkdownBuilder()
-                    .withText(escapeHtml4(scenarioDescription.getTitle()))
-                    .withErrorSign()
+            String title = new MarkdownBuilder().withText(escapeHtml4(scenarioDescription.getTitle())).withErrorSign()
                     .toString();
             markdownBuilder.withTitle(title);
         } else {
             markdownBuilder.withTitle(escapeHtml4(scenarioDescription.getTitle()));
         }
         Stream<MarkdownBuilder> examples = scenarioDescription.getExamples().stream().map(this::toMarkdown);
-        return markdownBuilder
-                .withParagraph(escapeHtml4(scenarioDescription.getDescription()))
-                .withBlockText(steps)
+        return markdownBuilder.withParagraph(escapeHtml4(scenarioDescription.getDescription())).withBlockText(steps)
                 .withText(examples);
     }
 
@@ -82,10 +76,8 @@ public class MarkdownPlugin extends SpecsPlugin {
         if (examples == null)
             return new MarkdownBuilder();
         MarkdownBuilder table = new MarkdownBuilder().withTable(examples.getTableHeader(), examples.getTableBody());
-        return new MarkdownBuilder()
-                .withParagraph("**" + examples.getKeyword() + "**: " + examples.getName())
-                .withParagraph(examples.getDescription())
-                .withParagraph(table.toString());
+        return new MarkdownBuilder().withParagraph("**" + examples.getKeyword() + "**: " + examples.getName())
+                .withParagraph(examples.getDescription()).withParagraph(table.toString());
     }
 
     private MarkdownBuilder toMarkdown(StepDescription stepDescription) {

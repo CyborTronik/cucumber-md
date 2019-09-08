@@ -14,16 +14,12 @@ public class FeatureDescription {
     private List<ScenarioDescription> scenarios;
 
     public void mergeScenarioDescription(ScenarioDescription scenarioDescription) {
-        scenarios.stream()
-                .filter(x -> x.getTitle().equals(scenarioDescription.getTitle()))
-                .findFirst()
+        scenarios.stream().filter(x -> x.getTitle().equals(scenarioDescription.getTitle())).findFirst()
                 .ifPresent(s -> s.merge(scenarioDescription));
     }
 
     public void mergeStepToScenario(String scenarioTitle, StepDescription stepDescription) {
-        scenarios.stream()
-                .filter(x -> x.getTitle().equals(scenarioTitle))
-                .findFirst()
+        scenarios.stream().filter(x -> x.getTitle().equals(scenarioTitle)).findFirst()
                 .ifPresent(s -> s.mergeStep(stepDescription));
     }
 }

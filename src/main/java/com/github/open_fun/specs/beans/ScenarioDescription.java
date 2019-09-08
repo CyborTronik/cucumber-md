@@ -64,9 +64,7 @@ public class ScenarioDescription {
     }
 
     public void mergeStep(StepDescription stepDescription) {
-        steps.stream()
-                .filter(x -> x.getTitle().equals(stepDescription.getTitle()))
-                .findFirst()
+        steps.stream().filter(x -> x.getTitle().equals(stepDescription.getTitle())).findFirst()
                 .ifPresent(step -> step.merge(stepDescription));
     }
 

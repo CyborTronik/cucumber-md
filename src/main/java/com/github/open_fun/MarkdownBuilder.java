@@ -73,7 +73,8 @@ public class MarkdownBuilder {
         withLine();
         if (tableHeader != null) {
             String row = tableRow(tableHeader);
-            String headerSeparator = tableHeader.getCells().stream().map(x -> ":---:").collect(Collectors.joining(" | "));
+            String headerSeparator = tableHeader.getCells().stream().map(x -> ":---:")
+                    .collect(Collectors.joining(" | "));
             withLine(row);
             withLine("| " + headerSeparator + " |");
         }
